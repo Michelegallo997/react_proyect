@@ -1,19 +1,18 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Navbar from './assets/Componentes/navbar/navbar.jsx'
-import Title  from './assets/Componentes/header/Title.jsx'
-import Counter from './assets/Componentes/header/Counter.jsx'
 import products from './data.js'
+import CardProducts from "./assets/Componentes/card/CardProducts";
 import App from './App.jsx'
+import FlexContainer from './assets/Componentes/card/flexContainer.jsx';
+
 
 const root= createRoot(document.getElementById('root'))
-
+const listProducts= products.map((prod) => (<CardProducts key= { prod.id} title={prod.title} img={prod.img} description={prod.description} price={prod.price}/>))
 root.render(
+  
   <StrictMode>
-    <Navbar/>
-    <Title size={32}>Zapatos</Title>
-    <Counter></Counter>
     <App></App>
+    <FlexContainer>{listProducts}</FlexContainer>
   </StrictMode>,
 )
