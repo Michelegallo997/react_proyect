@@ -22,7 +22,7 @@ function classNames(...classes) {
 
 
 export default function Example() {
-  const [cartCount, setCartCount] = useState(1); // Estado para el contador del carrito
+  const [cartCount, setCartCount] = useState(1); 
   const { loginWithRedirect, logout, isAuthenticated} = useAuth0();
   
 
@@ -150,8 +150,8 @@ export default function Example() {
     {navigation.map((item) => (
       <DisclosureButton
         key={item.name}
-        as={Link} // Cambiado a Link
-        to={item.to} // Usando to en lugar de href
+        as={Link} 
+        to={item.to} 
         aria-current={item.current ? 'page' : undefined}
         className={classNames(
           item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
