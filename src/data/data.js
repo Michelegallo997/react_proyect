@@ -12,7 +12,7 @@ const products = [
       id: 2,
       title: "Zapatillas Urbanas StreetStyle",
       price: 69.99,
-      stock: 30.,
+      stock: 30,
       category: "Urbanas",
       description: "Estilo moderno y comodidad para el día a día.",
       imageUrl: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/1f4b2c79-d877-4114-bfa5-2ebb0d804f8e/JORDAN+MVP.png" // Ejemplo
