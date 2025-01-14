@@ -1,18 +1,22 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import products from './data.js'
-import CardProducts from "./assets/Componentes/card/CardProducts";
-import App from './App.jsx'
-import FlexContainer from './assets/Componentes/card/flexContainer.jsx';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Auth0Provider } from '@auth0/auth0-react';
+import './index.css';
 
+import App from './App.jsx';
 
-const root= createRoot(document.getElementById('root'))
-const listProducts= products.map((prod) => (<CardProducts key= { prod.id} title={prod.title} img={prod.img} description={prod.description} price={prod.price}/>))
+const root = createRoot(document.getElementById('root'));
+
 root.render(
-  
   <StrictMode>
-    <App></App>
-    <FlexContainer>{listProducts}</FlexContainer>
-  </StrictMode>,
-)
+    <Auth0Provider
+      domain="dev-3l6cvzoplntxvuku.us.auth0.com"
+      clientId="iJyJB7oMWrSkdU5jGnRXDLlrFa1Lb3Kd"
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+    >
+      <App />
+    </Auth0Provider>
+  </StrictMode>
+);

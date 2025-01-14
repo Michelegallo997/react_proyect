@@ -1,24 +1,16 @@
-function getAsyncData()  {
-    console.log("solicitando datos");
-    const promiseData= new Promise((resolve, reject) => {
-        const errorFatal= true;
-       
-        setTimeout(() => {
-            if(errorFatal) reject("algo salio mal");
-            
-        console.log("promesa terminada");
-        
-        resolve({message: "ok"})
-        }, 2000);
-        
-    })
-    console.log("promesa generada");
-    
-    return promiseData;
-}
-export default getAsyncData();
-// getAsyncData()
-// .then((respuesta) =>{ console.log(respuesta)})
-// .catch((error) => {console.log(error);
-// })
+import products from "./data";
 
+export function getAsyncData() {
+  console.log("Cargando productos...");
+  return new Promise((resolve, reject) => {
+    const errorFatal = false;
+
+    setTimeout(() => {
+      if (errorFatal) {
+        reject("Algo salió mal");
+      } else {
+        resolve(products);
+      }
+    }, 500);
+  });
+}
