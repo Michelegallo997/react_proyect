@@ -7,7 +7,7 @@ function CardProducts({ id, imageUrl, title }) {
   return (
     <div
       className="card bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-4 flex flex-col justify-between h-full ml-4 group cursor-pointer"
-      onClick={() => navigate(`/product/${id}`)} // Redirigir al hacer clic
+      onClick={() => navigate(`/product/${id}`)} 
     >
       {/* Imagen */}
       <div className="relative overflow-hidden rounded-md mb-4">
