@@ -57,13 +57,57 @@ const Home = () => {
         </div>
       </div>
 
+      <div className="about">
+        <div className='container  flex flex-wrap justify-between'>
+          <div className='box bg-gray-300 w-52 rounded-lg  p-1 my-4 mx-4'>
+            <div className='icon'>
+          <i class="p-1 fa-solid fa-truck-fast"></i>
+          </div>
+          <div className='Descripcion text-center'>
+            <h3>Envío gratis</h3>
+            <p>Oder above $300</p>
+            </div>
+          </div>
+
+          <div className='box bg-gray-300 w-52 rounded-lg p-1 my-4 mx-4'>
+            <div className='icon'>
+            <i class="fa-solid fa-money-bill"></i>
+          </div>
+          <div className='Descripcion text-center'>
+            <h3>Devolución y reembolso</h3>
+            <p>Garantía de devolución de dinero</p>
+            </div>
+          </div>
+
+          <div className='box bg-gray-300 w-52 rounded-lg p-1 my-4 mx-4'>
+            <div className='icon'>
+            <i class="fa-solid fa-percent"></i>
+          </div>
+          <div className='Descripcion text-center'>
+            <h3>Descuentos para miembros</h3>
+            <p>10% de descuento en cada orden</p>
+            </div>
+          </div>
+
+          <div className='box bg-gray-300 w-52 rounded-lg  p-1 my-4 mx-4'>
+            <div className='icon'>
+            <i class="fa-solid fa-headphones"></i>
+          </div>
+          <div className='Descripcion text-center'>
+            <h3>Soporte Al Cliente</h3>
+            <p>24/7 soporte al cliente</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Products Section */}
       <div className="products py-8 bg-gray-200">
   <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {homeproducts.map((product) => (
       <CardProducts
         key={product.id}
-        id={product.id} // Pasar el id del producto
+        id={product.id} 
         imageUrl={product.imageUrl}
         title={product.title}
       />
