@@ -6,14 +6,3 @@
 .products_type .container .box p{
 text-align: center;
 }
-
-
-.products{
-    padding: 30% 40%;
-    width: 100%;
-}
-.products .container{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
