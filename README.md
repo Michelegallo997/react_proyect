@@ -36,5 +36,4 @@ Para correr este proyecto localmente, sigue estos pasos:
 
 ```bash
 git clone Michelegallo997/react_proyect
->>>>>>> 4dfeb6f (GalloMicheleReacts2.4)
-=======
+
