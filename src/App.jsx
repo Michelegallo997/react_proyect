@@ -6,7 +6,7 @@ import Navbar from "./Componentes/navbar/Navbar";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // ✅ Estado para el buscador
+  const [searchQuery, setSearchQuery] = useState(""); 
 
   // Función para añadir productos al carrito
   const addToCart = (product) => {
@@ -29,7 +29,7 @@ function App() {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
   };
 
-  // Función para actualizar cantidades
+ 
   const updateQuantity = (productId, newQuantity, stock) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
@@ -45,7 +45,7 @@ function App() {
       <Navbar 
         cartItems={cartItems} 
         searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery} // ✅ Pasamos el control del buscador
+        setSearchQuery={setSearchQuery}
       />
       
       <AppRoutes 
@@ -53,7 +53,7 @@ function App() {
         cartItems={cartItems} 
         removeFromCart={removeFromCart} 
         updateQuantity={updateQuantity}
-        searchQuery={searchQuery} // ✅ Pasamos la query de búsqueda
+        searchQuery={searchQuery} 
       />
       
       <Footer />
