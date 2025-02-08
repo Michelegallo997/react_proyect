@@ -1,7 +1,6 @@
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
 import ZapatillaLogo from '../../assets/ZapatillaLogo.png';
 
 const navigation = [
@@ -17,7 +16,6 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ cartItems, searchQuery, setSearchQuery }) {
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -34,8 +32,8 @@ export default function Navbar({ cartItems, searchQuery, setSearchQuery }) {
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
-          
-          {/* Menú móvil (hamburguesa) */}
+
+          {/* Menú móvil */}
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white">
               <span className="sr-only">Abrir menú</span>
@@ -71,7 +69,7 @@ export default function Navbar({ cartItems, searchQuery, setSearchQuery }) {
             </div>
           </div>
 
-          {/* Sección derecha (buscador, carrito, usuario) */}
+          {/* Sección derecha */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             
             {/* Buscador */}
@@ -103,48 +101,11 @@ export default function Navbar({ cartItems, searchQuery, setSearchQuery }) {
                 </span>
               )}
             </Link>
-
-            {/* Menú usuario */}
-            <Menu as="div" className="relative ml-3">
-              <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none">
-                <span className="sr-only">Menú usuario</span>
-                <i className="fa-solid fa-user text-xl text-white m-1"></i>
-              </MenuButton>
-
-              <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg">
-                {!isAuthenticated ? (
-                  <MenuItem>
-                    <button
-                      onClick={() => loginWithRedirect()}
-                      className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
-                    >
-                      Iniciar sesión
-                    </button>
-                  </MenuItem>
-                ) : (
-                  <>
-                    <MenuItem>
-                      <Link to="/perfil" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Mi perfil
-                      </Link>
-                    </MenuItem>
-                    <MenuItem>
-                      <button
-                        onClick={() => logout({ returnTo: window.location.origin })}
-                        className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
-                      >
-                        Cerrar sesión
-                      </button>
-                    </MenuItem>
-                  </>
-                )}
-              </MenuItems>
-            </Menu>
           </div>
         </div>
       </div>
 
-      {/* Menú móvil (dropdown) */}
+      {/* Menú móvil */}
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
           {navigation.map((item) => (
