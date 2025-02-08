@@ -3,12 +3,10 @@ import { useState } from "react";
 import AppRoutes from "./Componentes/home/rout";
 import Footer from "./Componentes/home/Footer";
 import CategoryProducts from "./Componentes/products/CategoryProducts";
-import Navbar from "./Componentes/navbar/Navbar";  // ✅ IMPORTADO CORRECTAMENTE
+import Navbar from "./Componentes/navbar/Navbar";  
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
-
-  // ✅ Función para añadir productos al carrito (incrementando cantidad si ya existe)
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(item => item.id === product.id);
@@ -24,12 +22,11 @@ function App() {
     });
   };
 
-  // ✅ Función para eliminar un producto completamente del carrito
-  const removeFromCart = (productId) => {
+    const removeFromCart = (productId) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
   };
 
-  // ✅ Función para actualizar la cantidad de un producto en el carrito
+  
   const updateQuantity = (productId, newQuantity, stock) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
@@ -49,8 +46,7 @@ function App() {
         removeFromCart={removeFromCart} 
         updateQuantity={updateQuantity} 
       />
-      {/* ✅ Añadimos CategoryProducts aquí para asegurar que recibe addToCart */}
-      <CategoryProducts addToCart={addToCart} />
+     
       <Footer />
     </BrowserRouter>
   );

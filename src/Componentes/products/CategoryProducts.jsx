@@ -5,7 +5,7 @@ import { db } from '../../firebasetest';
 import CardProducts from '../card/CardProducts';
 
 const CategoryProducts = () => {
-  const { categoryName } = useParams(); // Obtiene la categoría desde la URL
+  const { categoryName } = useParams(); 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,12 +18,12 @@ const CategoryProducts = () => {
         if (!categoryName) {
           console.error("categoryName es undefined.");
           setLoading(false);
-          return; // ✅ Evita errores si categoryName no está definido
+          return; 
         }
 
         let q;
         
-        if (categoryName?.toLowerCase() === "zapatillas") {  // ✅ Verifica si categoryName está definido antes de usar .toLowerCase()
+        if (categoryName?.toLowerCase() === "zapatillas") {  
           q = query(productsRef);
         } else {
           q = query(productsRef, where('categories', 'array-contains', categoryName.toLowerCase()));

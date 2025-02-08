@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CartPage = ({ cartItems = [], removeFromCart, updateQuantity }) => {  // ✅ Aseguramos que cartItems sea un array
+const CartPage = ({ cartItems = [], removeFromCart, updateQuantity }) => {  
   const totalPrice = cartItems.length > 0 
     ? cartItems.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0)
     : 0;

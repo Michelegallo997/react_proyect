@@ -59,14 +59,14 @@ const ProductDetails = ({ addToCart }) => {
         price: product.price,
         imageUrl: product.imageUrl || "https://via.placeholder.com/150",
         selectedSize,
-        stock: product.stock, // ✅ Añadir esta línea
+        stock: product.stock, 
       };
 
       addToCart(cartItem);
-      setCartError(false); // ✅ Si se añade correctamente, ocultar el error
+      setCartError(false); 
     } catch (error) {
       console.error("Error añadiendo al carrito:", error);
-      setCartError(true); // ✅ Mostrar error solo si realmente hay fallo
+      setCartError(true); 
     }
   };
 
