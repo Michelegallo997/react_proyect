@@ -1,10 +1,9 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import ZapatillaLogo from '../../assets/ZapatillaLogo.png';
 
-// Definimos las rutas de navegación
 const navigation = [
   { name: 'Step Legends', to: '/', current: true },
   { name: 'Zapatillas', to: '/categoria/zapatillas', current: false },
@@ -17,19 +16,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Navbar({ cartItems }) {
+export default function Navbar({ cartItems, searchQuery, setSearchQuery }) {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // Función para determinar la ruta activa
   const isCurrentPath = (to) => location.pathname === to;
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
-
-          {/* Botón del menú para móviles */}
+          
+          {/* Menú móvil (hamburguesa) */}
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white">
               <span className="sr-only">Abrir menú</span>
@@ -38,13 +44,13 @@ export default function Navbar({ cartItems }) {
             </DisclosureButton>
           </div>
 
-          {/* Logo y menú principal */}
+          {/* Logo y navegación principal */}
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
               <img src={ZapatillaLogo} alt="Logo" className="h-8 w-auto" />
             </div>
 
-            {/* Enlaces de navegación */}
+            {/* Enlaces de navegación (desktop) */}
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {navigation.map((item) => (
@@ -65,28 +71,40 @@ export default function Navbar({ cartItems }) {
             </div>
           </div>
 
-          {/* Sección derecha (búsqueda, carrito, perfil) */}
+          {/* Sección derecha (buscador, carrito, usuario) */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            {/* Búsqueda */}
-            <div className='search-box'>
-              <input className='m-1 search-txt p-1 rounded-md' type="text" placeholder="Buscar productos..." />
-              <button className='bg-gray-300 p-1 rounded-md text-gray-600 hover:text-white hover:bg-gray-600'>Buscar</button>
-            </div>
+            
+            {/* Buscador */}
+            <form onSubmit={handleSearch} className="flex gap-2 mr-4">
+              <input
+                type="text"
+                placeholder="Buscar productos..."
+                className="m-1 search-txt p-1 rounded-md text-black w-40 sm:w-48 lg:w-56"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="bg-gray-300 p-1 rounded-md text-gray-600 hover:text-white hover:bg-gray-600"
+              >
+                Buscar
+              </button>
+            </form>
 
-            {/* Icono del Carrito con enlace a /cart */}
+            {/* Carrito */}
             <Link 
-  to="/cart" 
-  className="relative ml-3 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white"
->
-  <i className="fas fa-shopping-cart text-xl"></i>
-  {cartItems.reduce((total, item) => total + (item.quantity || 1), 0) > 0 && (
-    <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
-      {cartItems.reduce((total, item) => total + (item.quantity || 1), 0)}
-    </span>
-  )}
-</Link>
+              to="/cart" 
+              className="relative ml-3 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white"
+            >
+              <i className="fas fa-shopping-cart text-xl"></i>
+              {cartItems.length > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                  {cartItems.reduce((total, item) => total + (item.quantity || 1), 0)}
+                </span>
+              )}
+            </Link>
 
-            {/* Menú de usuario */}
+            {/* Menú usuario */}
             <Menu as="div" className="relative ml-3">
               <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none">
                 <span className="sr-only">Menú usuario</span>
@@ -126,7 +144,7 @@ export default function Navbar({ cartItems }) {
         </div>
       </div>
 
-      {/* Menú móvil */}
+      {/* Menú móvil (dropdown) */}
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
           {navigation.map((item) => (

@@ -1,12 +1,14 @@
 import { BrowserRouter } from "react-router-dom";
 import { useState } from "react";
 import AppRoutes from "./Componentes/home/rout";
-import Footer from "./Componentes/home/Footer";
-import CategoryProducts from "./Componentes/products/CategoryProducts";
-import Navbar from "./Componentes/navbar/Navbar";  
+import Footer from "./Componentes/home/footer";
+import Navbar from "./Componentes/navbar/Navbar";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // ✅ Estado para el buscador
+
+  // Función para añadir productos al carrito
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(item => item.id === product.id);
@@ -17,16 +19,17 @@ function App() {
             : item
         );
       } else {
-        return [...prevItems, { ...product, quantity: 1 }]; 
+        return [...prevItems, { ...product, quantity: 1 }];
       }
     });
   };
 
-    const removeFromCart = (productId) => {
+  // Función para eliminar productos del carrito
+  const removeFromCart = (productId) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
   };
 
-  
+  // Función para actualizar cantidades
   const updateQuantity = (productId, newQuantity, stock) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
@@ -39,14 +42,20 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar cartItems={cartItems} />
+      <Navbar 
+        cartItems={cartItems} 
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery} // ✅ Pasamos el control del buscador
+      />
+      
       <AppRoutes 
         addToCart={addToCart} 
         cartItems={cartItems} 
         removeFromCart={removeFromCart} 
-        updateQuantity={updateQuantity} 
+        updateQuantity={updateQuantity}
+        searchQuery={searchQuery} // ✅ Pasamos la query de búsqueda
       />
-     
+      
       <Footer />
     </BrowserRouter>
   );
