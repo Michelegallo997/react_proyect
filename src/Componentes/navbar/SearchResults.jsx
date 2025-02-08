@@ -17,7 +17,7 @@ const SearchResults = () => {
       try {
         const productsRef = collection(db, 'products');
         
-        // ✅ Buscar en título (case-insensitive) y categorías
+      
         const titleQuery = query(
           productsRef,
           where('keywords', 'array-contains', searchTerm)
@@ -33,7 +33,7 @@ const SearchResults = () => {
           getDocs(categoryQuery)
         ]);
 
-        // ✅ Combinar y eliminar duplicados
+       
         const combinedProducts = [
           ...titleSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
           ...categorySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
