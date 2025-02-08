@@ -5,7 +5,7 @@ import { db } from '../../firebasetest';
 import CardProducts from '../card/CardProducts';
 
 const CategoryProducts = () => {
-  const { categoryName } = useParams();
+  const { categoryName } = useParams(); // Obtiene la categoría desde la URL
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,13 +15,17 @@ const CategoryProducts = () => {
         const productsRef = collection(db, 'products');
         console.log("Categoría recibida en URL:", categoryName);
 
+        if (!categoryName) {
+          console.error("categoryName es undefined.");
+          setLoading(false);
+          return; // ✅ Evita errores si categoryName no está definido
+        }
+
         let q;
         
-        if (categoryName.toLowerCase() === "zapatillas") {
-          // Si la categoría es "Zapatillas", traemos TODOS los productos
+        if (categoryName?.toLowerCase() === "zapatillas") {  // ✅ Verifica si categoryName está definido antes de usar .toLowerCase()
           q = query(productsRef);
         } else {
-          // Si es otra categoría, filtramos por ella
           q = query(productsRef, where('categories', 'array-contains', categoryName.toLowerCase()));
         }
 
@@ -43,13 +47,13 @@ const CategoryProducts = () => {
 
     fetchProducts();
   }, [categoryName]);
-  
+
   if (loading) return <div className="text-center py-8">Cargando...</div>;
 
   return (
     <div className="container mx-auto py-8 px-4">
       <h2 className="text-3xl font-bold mb-8 text-center">
-        {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
+        {categoryName ? categoryName.charAt(0).toUpperCase() + categoryName.slice(1) : "Categoría"}
       </h2>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

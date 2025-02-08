@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebasetest";
-import Loader from "./Loader"; 
+import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
 
-const ProductDetails = () => {
+const ProductDetails = ({ addToCart }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cartError, setCartError] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
 
   useEffect(() => {
@@ -28,7 +29,6 @@ const ProductDetails = () => {
           ...docSnap.data()
         };
 
-        // Establecer talla por defecto si hay stock
         if (productData.sizes && productData.sizes.length > 0) {
           setSelectedSize(productData.sizes[0]);
         }
@@ -47,11 +47,27 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    // Lógica para añadir al carrito
-    console.log("Añadiendo al carrito:", {
-      ...product,
-      selectedSize
-    });
+    if (!product) {
+      setCartError(true);
+      return;
+    }
+
+    try {
+      const cartItem = {
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        imageUrl: product.imageUrl || "https://via.placeholder.com/150",
+        selectedSize,
+        stock: product.stock, // ✅ Añadir esta línea
+      };
+
+      addToCart(cartItem);
+      setCartError(false); // ✅ Si se añade correctamente, ocultar el error
+    } catch (error) {
+      console.error("Error añadiendo al carrito:", error);
+      setCartError(true); // ✅ Mostrar error solo si realmente hay fallo
+    }
   };
 
   if (loading) {
@@ -75,21 +91,21 @@ const ProductDetails = () => {
       >
         ← Volver a productos
       </button>
+
+      {cartError && (
+        <p className="text-red-500 text-sm mt-2">⚠️ Error: No se pudo añadir al carrito.</p>
+      )}
       
       <div className="flex flex-col lg:flex-row items-center bg-white shadow-lg rounded-lg p-4 gap-6">
-        {/* Sección de imagen */}
         <div className="w-full lg:w-1/2">
           <img
-            src={product.imageUrl}
+            src={product.imageUrl || "https://via.placeholder.com/150"}
             alt={product.title}
             className="w-full h-96 object-contain rounded-lg"
           />
         </div>
-
-        {/* Sección de detalles */}
         <div className="w-full lg:w-1/2 space-y-4">
           <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
-          
           <div className="flex items-center gap-2">
             <span className="text-2xl font-semibold text-green-600">
               ${product.price}
@@ -104,9 +120,7 @@ const ProductDetails = () => {
               </span>
             )}
           </div>
-
           <p className="text-gray-600 text-lg">{product.description}</p>
-
           {product.sizes && (
             <div className="space-y-2">
               <label className="block text-gray-800 font-medium">
@@ -125,7 +139,6 @@ const ProductDetails = () => {
               </select>
             </div>
           )}
-
           <button
             onClick={handleAddToCart}
             className="w-full py-3 bg-black text-white rounded-md hover:bg-gray-800 transition-colors disabled:bg-gray-400"
@@ -133,20 +146,6 @@ const ProductDetails = () => {
           >
             {product.stock > 0 ? "Añadir al carrito" : "Producto agotado"}
           </button>
-
-          {/* Sección de categorías */}
-          {product.categories && (
-            <div className="flex flex-wrap gap-2 pt-4">
-              {product.categories.map((category) => (
-                <span
-                  key={category}
-                  className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm"
-                >
-                  {category}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </div>
