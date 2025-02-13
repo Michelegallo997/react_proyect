@@ -54,7 +54,7 @@ const CartPage = ({ cartItems = [], removeFromCart, updateQuantity }) => {
           <div className="mt-6">
             <h2 className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</h2>
             <button className="bg-blue-600 text-white px-6 py-3 rounded-md mt-4 hover:bg-blue-700 transition">
-              Proceder al pago
+                <a href="https://michelegallo997.github.io/paycard/">Proceder al pago</a>
             </button>
           </div>
         </>
