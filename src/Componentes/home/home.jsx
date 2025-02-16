@@ -26,7 +26,7 @@ const Home = () => {
               Stride Ahead: Where Comfort Meets Style.
             </h2>
             <Link
-              to="/Zapatillas"
+              to="/categoria/zapatillas"
               className="inline-block bg-white text-gray-800 font-medium px-6 py-3 rounded-md shadow-md hover:bg-black hover:text-white transition-all duration-300"
             >
               Shop Now <i className="fa-solid fa-arrow-right"></i>
